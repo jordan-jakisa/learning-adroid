@@ -69,7 +69,6 @@ class MainActivity : ComponentActivity() {
                                 navController.popBackStack()
                             }) {
                                 Text(text = "Navigate to screen 1")
-
                             }
                         }
                     }
