@@ -1,6 +1,6 @@
 # learning-android
 
-As I learn concepts from various sources across the internet, I will be updating this repository to experiment with the concepts that I have learned.
+As I learn concepts from various sources across the internet, I will be updating this repository showing experiments with the concepts that I have learned.
 
 Some notable resources and teachers I am learning from are listed below:
 
