@@ -12,7 +12,7 @@ suspend fun HttpResponse.toNetworkWeather(): NetworkWeather?{
         val gson = Gson()
         gson.fromJson(json, NetworkWeather::class.java)
     } catch (e: Exception){
-        Log.d("WAP", "Exception ==> $e")
+        e.printStackTrace()
         null
     }
 }

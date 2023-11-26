@@ -1,4 +1,4 @@
-package com.empire.weatherapp
+package com.empire.weatherapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

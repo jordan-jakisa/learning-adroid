@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -73,5 +77,14 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.10.1")
 
+    //dagger hilt
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-compiler:2.48.1")
 
+    //location provider
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+}
+
+kapt {
+    correctErrorTypes = true
 }
