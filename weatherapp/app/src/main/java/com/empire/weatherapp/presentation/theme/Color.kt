@@ -1,4 +1,4 @@
-package com.empire.weatherapp.ui.theme
+package com.empire.weatherapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

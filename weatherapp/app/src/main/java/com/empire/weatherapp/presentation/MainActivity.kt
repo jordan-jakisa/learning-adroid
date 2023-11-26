@@ -1,4 +1,4 @@
-package com.empire.weatherapp.ui
+package com.empire.weatherapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.empire.weatherapp.ui.theme.WeatherappTheme
+import com.empire.weatherapp.presentation.theme.WeatherappTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

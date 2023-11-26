@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -44,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
     packaging {
         resources {
@@ -83,6 +81,9 @@ dependencies {
 
     //location provider
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
 }
 
 kapt {
