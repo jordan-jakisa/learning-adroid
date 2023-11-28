@@ -2,8 +2,8 @@ package com.empire.weatherapp.data.repository
 
 import com.empire.weatherapp.data.remote.WeatherAPI
 import com.empire.weatherapp.data.remote.mappers.toWeatherInfo
-import com.empire.weatherapp.domain.repository.Resource
 import com.empire.weatherapp.domain.repository.WeatherRepository
+import com.empire.weatherapp.domain.util.Resource
 import com.empire.weatherapp.domain.util.toNetworkWeather
 import com.empire.weatherapp.domain.weather.WeatherInfo
 import javax.inject.Inject

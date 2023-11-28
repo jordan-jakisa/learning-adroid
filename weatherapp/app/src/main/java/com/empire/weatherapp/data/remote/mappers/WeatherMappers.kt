@@ -3,11 +3,13 @@ package com.empire.weatherapp.data.remote.mappers
 import com.empire.weatherapp.data.remote.models.NetworkWeather
 import com.empire.weatherapp.domain.weather.WeatherData
 import com.empire.weatherapp.domain.weather.WeatherInfo
+import com.empire.weatherapp.domain.weather.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private data class IndexedWeatherData(
-    val index: Int, val data: WeatherData
+    val index: Int,
+    val data: WeatherData
 )
 
 fun NetworkWeather.toNetworkWeatherDataMap(): Map<Int, List<WeatherData>> {
@@ -24,7 +26,7 @@ fun NetworkWeather.toNetworkWeatherDataMap(): Map<Int, List<WeatherData>> {
                 pressure = pressure,
                 windSpeed = windSpeed,
                 humidity = humidity,
-                weatherType = ""
+                weatherType = WeatherType.fromWMO(weatherCode)
             )
         )
     }.groupBy {

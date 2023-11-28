@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.empire.weatherapp.domain.location.LocationTracker
-import com.empire.weatherapp.domain.repository.Resource
 import com.empire.weatherapp.domain.repository.WeatherRepository
+import com.empire.weatherapp.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
