@@ -1,5 +1,6 @@
 package com.empire.weatherapp.presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val repository: WeatherRepository, private val locationTracker: LocationTracker
+    private val repository: WeatherRepository,
+    private val locationTracker: LocationTracker
 ) : ViewModel() {
     var state by mutableStateOf(WeatherState())
         private set
@@ -25,15 +27,17 @@ class WeatherViewModel @Inject constructor(
         )
 
         locationTracker.getCurrentLocation()?.let { location ->
-            when (val resource = repository.getWeatherData(location.latitude, location.longitude)) {
+            state = when (val resource = repository.getWeatherData(location.latitude, location.longitude)) {
                 is Resource.Success -> {
-                    state = state.copy(
+                    Log.d("WeatherDebug", "Data ==> ${resource.data}")
+                    state.copy(
                         weatherInfo = resource.data, isLoading = false, error = null
                     )
                 }
 
                 is Resource.Error -> {
-                    state = state.copy(
+                    Log.d("WeatherDebug", "Error ==> ${resource.message}")
+                    state.copy(
                         weatherInfo = null, isLoading = false, error = resource.message
                     )
                 }

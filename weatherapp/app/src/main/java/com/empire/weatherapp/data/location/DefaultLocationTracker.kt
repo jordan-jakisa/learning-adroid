@@ -14,7 +14,8 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 
 class DefaultLocationTracker @Inject constructor(
-    private val locationClient: FusedLocationProviderClient, private val application: Application
+    private val locationClient: FusedLocationProviderClient,
+    private val application: Application
 ) : LocationTracker {
     override suspend fun getCurrentLocation(): Location? {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(

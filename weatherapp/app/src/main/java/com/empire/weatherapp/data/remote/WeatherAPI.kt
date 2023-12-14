@@ -8,6 +8,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
 
 private const val BASE_URL = "https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,weathercode,relativehumidity_2m,windspeed_10m,pressure_msl"
+
 private val client = HttpClient(Android) {
     install(HttpRequestRetry) {
         retryOnServerErrors(maxRetries = 5)

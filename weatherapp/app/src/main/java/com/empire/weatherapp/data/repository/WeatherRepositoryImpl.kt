@@ -1,5 +1,6 @@
 package com.empire.weatherapp.data.repository
 
+import android.util.Log
 import com.empire.weatherapp.data.remote.WeatherAPI
 import com.empire.weatherapp.data.remote.mappers.toWeatherInfo
 import com.empire.weatherapp.domain.repository.WeatherRepository
@@ -13,13 +14,11 @@ class WeatherRepositoryImpl @Inject constructor(
 ) : WeatherRepository {
     override suspend fun getWeatherData(lat: Double, lon: Double): Resource<WeatherInfo> {
         return try {
+            val data = api.getWeather(
+                lat = lat.toString(), lon = lon.toString()
+            ).toNetworkWeather()?.toWeatherInfo()
             Resource.Success(
-                data = api.getWeather(
-                    lat = lat.toString(),
-                    lon = lon.toString()
-                )
-                    .toNetworkWeather()
-                    ?.toWeatherInfo()
+                data = data
             )
         } catch (e: Exception) {
             e.printStackTrace()
