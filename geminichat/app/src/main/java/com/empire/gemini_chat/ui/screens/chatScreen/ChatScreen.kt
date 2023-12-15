@@ -1,4 +1,4 @@
-package com.empire.gemini_chat.ui.screens
+package com.empire.gemini_chat.ui.screens.chatScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -25,7 +25,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.empire.gemini_chat.ui.theme.GeminichatTheme
+import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,6 +56,10 @@ fun ChatScreen(
         uiState.error?.let {
             snackbarHostState.showSnackbar(it)
         }
+    }
+
+    if (uiState.hasCompleted) {
+        prompt = ""
     }
 
     Scaffold(snackbarHost = {
@@ -76,9 +80,9 @@ fun ChatScreen(
             ) {
 
                 itemsIndexed(uiState.chats) { index, item ->
-                    val isOdd = index % 2 != 0
+                    val isUser = index % 2 != 0
 
-                    if (!isOdd) {
+                    if (!isUser) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
@@ -113,35 +117,11 @@ fun ChatScreen(
                                         RoundedCornerShape(16.dp)
                                     )
                                     .background(MaterialTheme.colorScheme.secondary)
-                                    .fillMaxWidth(.85f)
+                                    .fillMaxWidth(1f)
 
                             ) {
-                                Text(
-                                    text = item,
-                                    color = MaterialTheme.colorScheme.onSecondary,
-                                    modifier = Modifier.padding(16.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-                item {
-                    if (vm.incomingMessage.isNotEmpty()) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Start
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .clip(
-                                        RoundedCornerShape(16.dp)
-                                    )
-                                    .background(MaterialTheme.colorScheme.secondary)
-                                    .fillMaxWidth(.7f)
-
-                            ) {
-                                Text(
-                                    text = vm.incomingMessage,
+                                MarkdownText(
+                                    markdown = item,
                                     color = MaterialTheme.colorScheme.onSecondary,
                                     modifier = Modifier.padding(16.dp)
                                 )
@@ -178,7 +158,6 @@ fun ChatScreen(
                             ).show()
                         }) {
                             Icon(imageVector = Icons.Default.Send, contentDescription = "Send")
-
                         }
                     }
                 }

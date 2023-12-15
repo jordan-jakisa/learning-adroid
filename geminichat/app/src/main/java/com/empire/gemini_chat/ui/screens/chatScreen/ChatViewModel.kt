@@ -1,4 +1,4 @@
-package com.empire.gemini_chat.ui.screens
+package com.empire.gemini_chat.ui.screens.chatScreen
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.empire.gemini_chat.domain.repositories.GeminiRepository
 import com.empire.gemini_chat.utils.Resource
 import com.google.ai.client.generativeai.Chat
-import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -51,7 +50,7 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun sendMessage(prompt: String) {
+    fun sendMessageStream(prompt: String) {
         val content = content(role = "user") { text(prompt) }
         uiState = uiState.copy(
             isLoading = true
@@ -76,16 +75,14 @@ class ChatViewModel @Inject constructor(
                             uiState.chats[lastIndex] = updatedLastChat
 
                             uiState = uiState.copy(
-                                chats = uiState.chats,
-                                isLoading = false
+                                chats = uiState.chats, isLoading = false
                             )
                         }
                     }
                 } catch (e: Exception) {
                     Log.d("Response", "error: ${e.message}")
                     uiState = uiState.copy(
-                        error = e.message ?: "An unknown error occurred!",
-                        isLoading = false
+                        error = e.message ?: "An unknown error occurred!", isLoading = false
                     )
                 }
             }.invokeOnCompletion { hasStartedSteaming = false }
@@ -94,8 +91,7 @@ class ChatViewModel @Inject constructor(
                     delay(20)
                 }
                 var chunck = queue.poll()
-                while (chunck != null)
-                {
+                while (chunck != null) {
                     chunck.forEach {
                         delay(2)
                         incomingMessage += it
@@ -111,6 +107,50 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun sendMessage(prompt: String) {
+        val content =
+            content(role = "user") { text("Provide brief and concise response to this question and all responses should be in markdown for formatting: $prompt") }
+        uiState = uiState.copy(
+            isLoading = true, hasCompleted = false
+        )
+
+        viewModelScope.launch {
+            launch {
+                try {
+                    uiState.chat?.let {
+
+                        uiState.chats.add(prompt)
+                        when (val response = geminiRepository.sendMessage(it, content)) {
+                            is Resource.Error -> {
+
+                                uiState = uiState.copy(
+                                    error = response.message, isLoading = false, hasCompleted = true
+                                )
+                            }
+
+                            is Resource.Success -> {
+                                response.data?.text?.let { text ->
+                                    uiState.chats.add(text)
+                                }
+                                uiState = uiState.copy(
+                                    isLoading = false, hasCompleted = true
+                                )
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.d("Response", "error: ${e.message}")
+                    uiState = uiState.copy(
+                        error = e.message ?: "An unknown error occurred!",
+                        isLoading = false,
+                        hasCompleted = true
+                    )
+                }
+            }
+        }
+
+    }
+
 }
 
 data class ChatScreenUIState(
@@ -118,5 +158,6 @@ data class ChatScreenUIState(
     val chats: MutableList<String> = mutableListOf(),
     var error: String? = null,
     val lastMessageContent: String? = null,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val hasCompleted: Boolean = false
 )
