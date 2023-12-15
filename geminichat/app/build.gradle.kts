@@ -79,7 +79,7 @@ dependencies {
     implementation("com.google.ai.client.generativeai:generativeai:0.1.1")
 
     //hilt
-    implementation("com.google.dagger:hilt-android:2.48.1")
+    implementation("com.google.dagger:hilt-android:2.44.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
