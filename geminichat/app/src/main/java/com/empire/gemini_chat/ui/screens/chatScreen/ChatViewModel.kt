@@ -150,7 +150,6 @@ class ChatViewModel @Inject constructor(
         }
 
     }
-
 }
 
 data class ChatScreenUIState(
