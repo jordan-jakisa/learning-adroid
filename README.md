@@ -5,5 +5,4 @@ As I learn concepts from various sources across the internet, I will be updating
 Some notable resources and teachers I am learning from are listed below:
 
 - [Philip Lackner Youtube](https://www.youtube.com/@PhilippLackner)
-
-
+- [Charfoui Younes Youtube](https://www.youtube.com/@CharfaouiYounes).
